@@ -1,23 +1,20 @@
-vueRut.install = function (Vue) {
+export default {
 
-	Vue.directive('rut', {
+	update: function(el, binding, vnode) {
 
-		update: function(el, binding, vnode) {
+		var event = new Event('input', {bubbles: true});
+		el.value = formatRut(cleanRut(el.value));
+		el.dispatchEvent(event);
 
-			var event = new Event('input', {bubbles: true});
-			el.value = formatRut(cleanRut(el.value));
-			el.dispatchEvent(event);
+		var field = binding.expression;
 
-			var field = binding.expression;
-
-			if (validateRut(el.value)) {
-				vnode.context[field] = true;
-			}
-			else {
-				vnode.context[field] = false;
-			}
+		if (validateRut(el.value)) {
+			vnode.context[field] = true;
 		}
-	});
+		else {
+			vnode.context[field] = false;
+		}
+	}
 }
 
 function cleanRut(rut) {
