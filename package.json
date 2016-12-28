@@ -1,0 +1,25 @@
+{
+  "name": "vue-rut",
+  "version": "1.0.0",
+  "description": "Chilean Rut component for Vue",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/isaiascardenas/vue-rut.git"
+  },
+  "keywords": [
+    "rut"
+  ],
+  "author": "Isaias Cardenas <isaias.cardenas@usach.cl>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/isaiascardenas/vue-rut/issues"
+  },
+  "homepage": "https://github.com/isaiascardenas/vue-rut#readme",
+  "devDependencies": {
+    "vue": "^2.1.6"
+  }
+}
