@@ -1,6 +1,6 @@
 {
   "name": "vue-rut",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Chilean Rut component for Vue",
   "main": "dist/vue-rut.js",
   "scripts": {
