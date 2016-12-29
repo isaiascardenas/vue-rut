@@ -1,6 +1,6 @@
 # Vue-Rut
 
-A Vue package to format and validate chilean rut.
+A Vue package to format and validate a chilean rut.
  
 ## Installation
 
@@ -36,7 +36,7 @@ Link the vue instance whith the html, add the directive `v-rut` and the `v-model
 ```html
 <div id="app">
   ...
-  <input v-model="rut" v-rut>
+  <input v-rut v-model="rut">
   ...
 </div>
 ```
