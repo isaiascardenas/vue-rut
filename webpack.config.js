@@ -3,6 +3,7 @@ module.exports = {
  output: {
      path: './dist',
      filename: 'vue-rut.js',
+     libraryTarget: 'umd'
  },
  module: {
      loaders: [{

@@ -1,4 +1,14 @@
-/******/ (function(modules) { // webpackBootstrap
+(function webpackUniversalModuleDefinition(root, factory) {
+	if(typeof exports === 'object' && typeof module === 'object')
+		module.exports = factory();
+	else if(typeof define === 'function' && define.amd)
+		define([], factory);
+	else {
+		var a = factory();
+		for(var i in a) (typeof exports === 'object' ? exports : root)[i] = a[i];
+	}
+})(this, function() {
+return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
 
@@ -46,22 +56,16 @@
 
 	'use strict';
 
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-
 	var _rut = __webpack_require__(1);
 
 	var _rut2 = _interopRequireDefault(_rut);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var install = function install(Vue) {
+	exports.install = function (Vue) {
 
 		Vue.directive('rut', _rut2.default);
 	};
-
-	exports.default = { install: install };
 
 /***/ },
 /* 1 */
@@ -72,24 +76,21 @@
 	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
-	exports.default = {
 
-		update: function update(el, binding, vnode) {
+	exports.default = function (el, binding, vnode) {
 
-			var event = new Event('input', { bubbles: true });
-			el.value = formatRut(cleanRut(el.value));
-			el.dispatchEvent(event);
+		var event = new Event('input', { bubbles: true });
+		el.value = formatRut(cleanRut(el.value));
+		el.dispatchEvent(event);
 
-			var field = binding.expression;
+		var field = binding.expression;
 
-			if (validateRut(el.value)) {
-				vnode.context[field] = true;
-			} else {
-				vnode.context[field] = false;
-			}
+		if (validateRut(el.value)) {
+			vnode.context[field] = true;
+		} else {
+			vnode.context[field] = false;
 		}
 	};
-
 
 	function cleanRut(rut) {
 		return rut.replace(/[^0-9kK]+/g, '').toLowerCase();
@@ -130,4 +131,6 @@
 	}
 
 /***/ }
-/******/ ]);
+/******/ ])
+});
+;

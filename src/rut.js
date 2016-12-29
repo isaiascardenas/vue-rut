@@ -1,22 +1,3 @@
-export default {
-
-	update: function(el, binding, vnode) {
-
-		var event = new Event('input', {bubbles: true});
-		el.value = formatRut(cleanRut(el.value));
-		el.dispatchEvent(event);
-
-		var field = binding.expression;
-
-		if (validateRut(el.value)) {
-			vnode.context[field] = true;
-		}
-		else {
-			vnode.context[field] = false;
-		}
-	}
-}
-
 function cleanRut(rut) {
 	return rut.replace(/[^0-9kK]+/g,'').toLowerCase();
 }
@@ -53,4 +34,20 @@ function validateRut(rut) {
 		}
 	}
 	return false;
+}
+
+export default function(el, binding, vnode) {
+
+	var event = new Event('input', {bubbles: true});
+	el.value = formatRut(cleanRut(el.value));
+	el.dispatchEvent(event);
+
+	var field = binding.expression;
+
+	if (validateRut(el.value)) {
+		vnode.context[field] = true;
+	}
+	else {
+		vnode.context[field] = false;
+	}
 }

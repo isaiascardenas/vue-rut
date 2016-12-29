@@ -1,8 +1,6 @@
-import vueRut from './rut.js';
+import vueRut from './rut'
 
-const install = function (Vue) {
+exports.install = function (Vue) {
 
 	Vue.directive('rut', vueRut);
-};
-
-export default {install};
+}
