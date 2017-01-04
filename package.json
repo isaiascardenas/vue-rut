@@ -4,7 +4,7 @@
   "description": "Chilean Rut component for Vue",
   "main": "dist/vue-rut.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "karma start test/karma.conf.js"
   },
   "repository": {
     "type": "git",
@@ -23,6 +23,11 @@
     "babel-core": "^6.21.0",
     "babel-loader": "^6.2.10",
     "babel-preset-es2015": "^6.18.0",
+    "jasmine-core": "^2.5.2",
+    "karma": "^1.3.0",
+    "karma-chrome-launcher": "^2.0.0",
+    "karma-jasmine": "^1.1.0",
+    "karma-webpack": "^1.8.1",
     "vue": "^2.1.6",
     "webpack": "^1.14.0"
   }

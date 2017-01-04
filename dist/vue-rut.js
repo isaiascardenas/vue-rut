@@ -122,7 +122,7 @@ return /******/ (function(modules) { // webpackBootstrap
 				case 11:
 					return rut.slice(-1) == 0;
 				case 10:
-					returnrut.slice(-1) == 'k';
+					return rut.slice(-1) == 'k';
 				default:
 					return rut.slice(-1) == 11 - sum % 11;
 			}
