@@ -1,5 +1,5 @@
 module.exports = {
- entry: './src/index.js',
+ entry: './src/vue-rut.js',
  output: {
      path: './dist',
      filename: 'vue-rut.js',

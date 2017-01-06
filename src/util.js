@@ -1,8 +1,8 @@
-function cleanRut(rut) {
+export function cleanRut(rut) {
 	return rut.replace(/[^0-9kK]+/g,'').toLowerCase();
 }
 
-function formatRut(rut) {
+export function formatRut(rut) {
 	if (rut.length > 1) {
 		rut = rut.slice(0,-1)+'-'+rut.slice(-1);
 	if (rut.length > 5) {
@@ -15,7 +15,7 @@ if (rut.length > 8) {
 	return rut
 }
 
-function validateRut(rut) {
+export function validateRut(rut) {
 	var numberRut = cleanRut(rut).slice(0,-1);
 	if (numberRut.length > 6) {
 		var auxArray = [3,2,7,6,5,4,3,2]
@@ -34,20 +34,4 @@ function validateRut(rut) {
 		}
 	}
 	return false;
-}
-
-export default function(el, binding, vnode) {
-
-	var event = new Event('input', {bubbles: true});
-	el.value = formatRut(cleanRut(el.value));
-	el.dispatchEvent(event);
-
-	var field = binding.expression;
-
-	if (validateRut(el.value)) {
-		vnode.context[field] = true;
-	}
-	else {
-		vnode.context[field] = false;
-	}
 }

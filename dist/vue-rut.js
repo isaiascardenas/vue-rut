@@ -56,19 +56,58 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	'use strict';
 
-	var _rut = __webpack_require__(1);
-
-	var _rut2 = _interopRequireDefault(_rut);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
 	exports.install = function (Vue) {
 
-		Vue.directive('rut', _rut2.default);
+		Vue.directive('rut', __webpack_require__(1));
+		Vue.filter('rut', __webpack_require__(3));
 	};
 
 /***/ },
 /* 1 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _util = __webpack_require__(2);
+
+	module.exports = {
+
+		bind: function bind(el, binding, vnode) {
+			this.inputValue = '';
+
+			for (var i = vnode.data.directives.length - 1; i >= 0; i--) {
+				if (vnode.data.directives[i].name == 'model') {
+					var field = vnode.data.directives[i].expression;
+					break;
+				}
+			}
+
+			this.vueModel = vnode.context[field];
+		},
+
+		update: function update(el, binding, vnode) {
+
+			this.inputValue = vnode.elm.value;
+			this.inputValue = (0, _util.formatRut)((0, _util.cleanRut)(this.inputValue));
+			el.value = this.inputValue;
+
+			if ((0, _util.validateRut)(inputValue)) {
+				this.vueModel = this.inputValue;
+			} else {
+				this.vueModel = null;
+			}
+		},
+
+		data: function data() {
+			return {
+				vueModel: '',
+				inputValue: ''
+			};
+		}
+	};
+
+/***/ },
+/* 2 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -76,22 +115,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
-
-	exports.default = function (el, binding, vnode) {
-
-		var event = new Event('input', { bubbles: true });
-		el.value = formatRut(cleanRut(el.value));
-		el.dispatchEvent(event);
-
-		var field = binding.expression;
-
-		if (validateRut(el.value)) {
-			vnode.context[field] = true;
-		} else {
-			vnode.context[field] = false;
-		}
-	};
-
+	exports.cleanRut = cleanRut;
+	exports.formatRut = formatRut;
+	exports.validateRut = validateRut;
 	function cleanRut(rut) {
 		return rut.replace(/[^0-9kK]+/g, '').toLowerCase();
 	}
@@ -129,6 +155,18 @@ return /******/ (function(modules) { // webpackBootstrap
 		}
 		return false;
 	}
+
+/***/ },
+/* 3 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _util = __webpack_require__(2);
+
+	module.exports = function (value) {
+	  return (0, _util.formatRut)((0, _util.cleanRut)(value));
+	};
 
 /***/ }
 /******/ ])
