@@ -56,58 +56,16 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	'use strict';
 
+	var _util = __webpack_require__(1);
+
 	exports.install = function (Vue) {
 
-		Vue.directive('rut', __webpack_require__(1));
-		Vue.filter('rut', __webpack_require__(3));
+		Vue.directive('rut', _util.rutDirective);
+		Vue.filter('rut', _util.rutFilter);
 	};
 
 /***/ },
 /* 1 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var _util = __webpack_require__(2);
-
-	module.exports = {
-
-		bind: function bind(el, binding, vnode) {
-			this.inputValue = '';
-
-			for (var i = vnode.data.directives.length - 1; i >= 0; i--) {
-				if (vnode.data.directives[i].name == 'model') {
-					var field = vnode.data.directives[i].expression;
-					break;
-				}
-			}
-
-			this.vueModel = vnode.context[field];
-		},
-
-		update: function update(el, binding, vnode) {
-
-			this.inputValue = vnode.elm.value;
-			this.inputValue = (0, _util.formatRut)((0, _util.cleanRut)(this.inputValue));
-			el.value = this.inputValue;
-
-			if ((0, _util.validateRut)(inputValue)) {
-				this.vueModel = this.inputValue;
-			} else {
-				this.vueModel = null;
-			}
-		},
-
-		data: function data() {
-			return {
-				vueModel: '',
-				inputValue: ''
-			};
-		}
-	};
-
-/***/ },
-/* 2 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -115,9 +73,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
-	exports.cleanRut = cleanRut;
-	exports.formatRut = formatRut;
-	exports.validateRut = validateRut;
+	exports.rutFilter = rutFilter;
 	function cleanRut(rut) {
 		return rut.replace(/[^0-9kK]+/g, '').toLowerCase();
 	}
@@ -156,16 +112,52 @@ return /******/ (function(modules) { // webpackBootstrap
 		return false;
 	}
 
-/***/ },
-/* 3 */
-/***/ function(module, exports, __webpack_require__) {
+	function rutFilter(value) {
+		return formatRut(cleanRut(value));
+	}
 
-	'use strict';
+	var rutDirective = exports.rutDirective = {
 
-	var _util = __webpack_require__(2);
+		bind: function bind(el, binding, vnode) {
+			var _self = binding.def.data;
 
-	module.exports = function (value) {
-	  return (0, _util.formatRut)((0, _util.cleanRut)(value));
+			for (var i = vnode.data.directives.length - 1; i >= 0; i--) {
+				if (vnode.data.directives[i].name == 'model') {
+					_self.vueModel = vnode.data.directives[i].expression;
+					break;
+				}
+			}
+		},
+
+		update: function update(el, binding, vnode) {
+			var _self = binding.def.data;
+
+			if (_self.validateRut) {
+
+				_self.inputValue = vnode.elm.value;
+				_self.inputValue = formatRut(cleanRut(_self.inputValue));
+				vnode.elm.value = _self.inputValue;
+
+				if (validateRut(_self.inputValue)) {
+					_self.vueModel = _self.inputValue;
+					_self.validateRut = false;
+				} else {
+					vnode.context[_self.vueModel] = null;
+					vnode.elm.value = _self.inputValue;
+					_self.validateRut = false;
+					// console.log('directive input:', vnode.elm.value);
+					// console.log('directive model:', vnode.context[_self.vueModel]);
+				}
+			} else {
+				_self.validateRut = true;
+			}
+		},
+
+		data: {
+			vueModel: '',
+			inputValue: '',
+			validateRut: true
+		}
 	};
 
 /***/ }

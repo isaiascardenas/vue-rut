@@ -1,8 +1,8 @@
 module.exports = {
- entry: './src/vue-rut.js',
+ entry: './test.spec.js',
  output: {
-     path: './dist',
-     filename: 'vue-rut.js',
+     path: './',
+     filename: 'test.js',
      libraryTarget: 'umd'
  },
  module: {

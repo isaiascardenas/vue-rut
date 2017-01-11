@@ -3,16 +3,14 @@ import Vue from 'vue'
 
 describe("vue-rut format test", () => {
 
-	let vm;
+	var vm;
 
 	beforeEach(() => {
 		Vue.use(vueRut);
 
 		vm = new Vue({
 		  template: `
-		    <div>
-		      <input v-rut v-model="rut" type="text">
-		    </div>
+		      <input id="app" v-rut v-model="rut" type="text">
 		  `,
 		  data: {
 		    rut: ''
@@ -21,11 +19,16 @@ describe("vue-rut format test", () => {
 	});
 
   it('should make input display an empty string if model value is empty', () => {
-  	console.log("hoarstarst", vm);
-    // vm.rut = '';
-    // vm.$mount();
+    // vm.rut = '123456789';
+    // vm._vnode.elm.value = '123456789';
+    vm.$set(vm._vnode.elm, 'value', '123456789');
 
-    expect('').toEqual('');
+    vm.$nextTick(function () {
+      console.log('test input', vm._vnode.elm.value);
+      console.log('test model', vm.rut);
+    });
+
+    expect(vm.$el.value).toEqual('12.345.678-9');
   });
 
   // it('should set model to rut format with nine digits', () => {
