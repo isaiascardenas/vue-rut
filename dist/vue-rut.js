@@ -133,23 +133,19 @@ return /******/ (function(modules) { // webpackBootstrap
 			var _self = binding.def.data;
 
 			if (_self.validateRut) {
+				el.value = formatRut(cleanRut(el.value));
+				_self.inputValue = el.value;
 
-				_self.inputValue = vnode.elm.value;
-				_self.inputValue = formatRut(cleanRut(_self.inputValue));
-				vnode.elm.value = _self.inputValue;
-
-				if (validateRut(_self.inputValue)) {
-					_self.vueModel = _self.inputValue;
+				if (validateRut(el.value)) {
+					vnode.context[_self.vueModel] = cleanRut(el.value);
 					_self.validateRut = false;
 				} else {
 					vnode.context[_self.vueModel] = null;
-					vnode.elm.value = _self.inputValue;
 					_self.validateRut = false;
-					// console.log('directive input:', vnode.elm.value);
-					// console.log('directive model:', vnode.context[_self.vueModel]);
 				}
 			} else {
 				_self.validateRut = true;
+				el.value = _self.inputValue;
 			}
 		},
 

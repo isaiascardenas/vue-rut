@@ -6,7 +6,7 @@ function formatRut(rut) {
 	if (rut.length > 1) {
 		rut = rut.slice(0,-1)+'-'+rut.slice(-1);
 	if (rut.length > 5) {
-if (rut.length > 8) {
+		if (rut.length > 8) {
 				return rut.slice(0,-8)+'.'+rut.slice(-8,-5) +'.'+rut.slice(-5);
 			}
 		return rut.slice(0,-5) +'.'+rut.slice(-5);
@@ -37,7 +37,7 @@ function validateRut(rut) {
 }
 
 export function rutFilter(value) {
-  return formatRut(cleanRut(value));
+ 	return formatRut(cleanRut(value));
 }
 
 
@@ -58,25 +58,21 @@ export const rutDirective = {
 		var _self = binding.def.data;
 
 		if (_self.validateRut) {
-
-			_self.inputValue = vnode.elm.value;
-			_self.inputValue = formatRut(cleanRut(_self.inputValue));
-			vnode.elm.value = _self.inputValue;
-
-			if (validateRut(_self.inputValue)) {
-				_self.vueModel = _self.inputValue;
+			el.value = formatRut(cleanRut(el.value));
+			_self.inputValue = el.value;
+			
+			if (validateRut(el.value)) {
+				vnode.context[_self.vueModel] = cleanRut(el.value)
 				_self.validateRut = false;
 			}
 			else {
 				vnode.context[_self.vueModel] = null;
-				vnode.elm.value = _self.inputValue;
-				_self.validateRut = false;
-				// console.log('directive input:', vnode.elm.value);
-				// console.log('directive model:', vnode.context[_self.vueModel]);
+				_self.validateRut = false;				
 			}
 		}
 		else {
 			_self.validateRut = true;
+			el.value = _self.inputValue;
 		}
 	},
 

@@ -1,132 +1,150 @@
-import vueRut from './../dist/vue-rut'
-import Vue from 'vue'
+import vueRut from './../dist/vue-rut';
+import Vue from 'vue';
 
-describe("vue-rut format test", () => {
+describe('vue-rut: Vue directive', () => {
 
-	var vm;
+  var vm;
 
-	beforeEach(() => {
-		Vue.use(vueRut);
+    beforeEach(() => {
+      Vue.use(vueRut);
 
-		vm = new Vue({
-		  template: `
-		      <input id="app" v-rut v-model="rut" type="text">
-		  `,
-		  data: {
-		    rut: ''
-		  }
-		}).$mount()
-	});
-
-  it('should make input display an empty string if model value is empty', () => {
-    // vm.rut = '123456789';
-    // vm._vnode.elm.value = '123456789';
-    vm.$set(vm._vnode.elm, 'value', '123456789');
-
-    vm.$nextTick(function () {
-      console.log('test input', vm._vnode.elm.value);
-      console.log('test model', vm.rut);
+        vm = new Vue({
+          template: `
+            <input id="app" v-rut type="text" v-model="rut">
+          `,
+          data: {
+            rut: ''
+          }
+        }).$mount()
     });
 
-    expect(vm.$el.value).toEqual('12.345.678-9');
+  describe('input whit rut format test', () => {
+
+    it('should make input display an empty string if model value is empty', (done) => {
+      vm.rut = '';
+
+      vm.$nextTick(() => {
+        expect(vm.$el.value).toEqual('');
+        done();
+      });
+    });
+
+    it('should set input value to rut format with nine digits', (done) => {
+      vm.rut = '123456789';
+
+      vm.$nextTick(() => {
+        expect(vm.$el.value).toEqual('12.345.678-9');
+        done();
+      });
+    });
+
+    it('should set input value to rut format with eight digits', (done) => {
+      vm.rut = '12345678';
+
+      vm.$nextTick(() => {
+        expect(vm.$el.value).toEqual('1.234.567-8');
+        done();
+      });
+    });
+
+    it('should make input display an empty string if model value is not number or "k"', (done) => { 
+      vm.rut = 'string_(*?!`~/,.-';
+
+      vm.$nextTick(() => {
+        expect(vm.$el.value).toEqual('');
+        done();
+      });
+    });
+
+    it('should set input value to "k" if model value is a string with "k"', (done) => { 
+      vm.rut = 'stringWithk';
+
+      vm.$nextTick(() => {
+        expect(vm.$el.value).toEqual('k');
+        done();
+      });
+    });
+
+    it('should set input value to lowercase "k" if model value is a uppercase "k"', (done) => { 
+      vm.rut = 'stringWithUppercaseK';
+      
+      vm.$nextTick(() => {
+        expect(vm.$el.value).toEqual('k');
+        done();
+      });
+    });
+
+    it('should set input value to rut format with k', (done) => { 
+      vm.rut = '8173258k';
+
+      vm.$nextTick(() => {
+        expect(vm.$el.value).toEqual('8.173.258-k');
+        done();
+      });
+    });
+
+    it('should set input value to rut format if "." and "-" are within model value', (done) => { 
+      vm.rut = '10.897.268-6';
+
+      vm.$nextTick(() => {
+        expect(vm.$el.value).toEqual('10.897.268-6');
+        done();
+      });
+    });
+
   });
 
-  // it('should set model to rut format with nine digits', () => {
-  //   vm.rut = '666666666';
-  //   vm.$mount();
 
-  //   expect(vm.rut).toEqual('66.666.666-6');
-  // });
+  describe('rut validation test', () => {
 
-  // it('should set model to rut format with eight digits', () => {
-  //   vm.rut = '66666666';
-  //   vm.$mount();
+    it('should set model to clean input rut if model value is a valid rut with 9 digits', (done) => { 
+      vm.rut = '19.111.897-9';
 
-  //   expect(vm.rut).toEqual('6.666.666-6');
-  // });
+      vm.$nextTick(() => {
+        expect(vm.rut).toEqual('191118979');
+        done();
+      });
+    });
 
-  // it('should set input value to rut format if model value is not empty', () => {
-  //   vm.rut = '666666666';
-  //   vm.$mount();
+    it('should set model to null if model value is a invalid rut', (done) => { 
+      vm.rut = '19.111.897-1';
 
-  //   expect(vm.$el.querySelector('input').value).toEqual('66.666.666-6');    
-  // });
+      vm.$nextTick(() => {
+        expect(vm.rut).toBe(null);
+        done();
+      });
+    });
 
-  // it('should make input display an empty string if model value is not number or "k"', () => { 
-  //   vm.rut = 'string_(*?!`~/,.-';
-  //   vm.$mount();
+    it('should set model to clean input rut if model value is a valid rut with 8 digits', (done) => { 
+      vm.rut = '8.820.757-2';
 
-  //   expect(vm.rut).toEqual('');
-  // });
+      vm.$nextTick(() => {
+        expect(vm.rut).toEqual('88207572');
+        done();
+      });
+    });
 
-  // it('should set model to "k" if model value is a string with "k"', () => { 
-  //   vm.rut = 'stringWithk';
-  //   vm.$mount();
+    it('should set model to clean input rut if model value is a valid rut with k', (done) => { 
+      vm.rut = '14.198.117-k';
+      
+      vm.$nextTick(() => {
+        expect(vm.rut).toEqual('14198117k');
+        done();
+      });
+    });
 
-  //   expect(vm.rut).toEqual('k');
-  // });
-
-  // it('should set model to lowercase "k" if model value is a uppercase "k"', () => { 
-  //   vm.rut = 'stringWithUppercaseK';
-  //   vm.$mount();
-
-  //   expect(vm.rut).toEqual('k');
-  // });
-
-  // it('should set model to rut format with k', () => { 
-  //   vm.rut = '8173258k';
-  //   vm.$mount();
-
-  //   expect(vm.rut).toEqual('8.173.258-k');
-  // });
-
-  // it('should set model to rut format if "." and "-" are within model value', () => { 
-  //   vm.rut = '10.897.268-6';
-  //   vm.$mount();
-
-  //   expect(vm.rut).toEqual('10.897.268-6');
-  // });
+    it('should set model to null if model value is a string', (done) => { 
+      vm.rut = 'string';
+      
+      vm.$nextTick(() => {
+        expect(vm.rut).toBe(null);
+        done();
+      });
+    });
+  });
 });
 
-// describe('vue-rut valid rut test', () => {
-
-//   it('should set directive expression (validRut) to true if model value is a valid rut with 9 digits', () => { 
-//     vm.rut = '19.111.897-9';
-//     vm.$mount();
-
-//     expect(vm.validRut).toBe(true);
-//   });
-
-//   it('should set directive expression (validRut) to false if model value is a invalid rut', () => { 
-//     vm.rut = '19.111.897-1';
-//     vm.$mount();
-
-//     expect(vm.validRut).toBe(false);
-//   });
-
-//   it('should set directive expression (validRut) to true if model value is a valid rut with 8 digits', () => { 
-//     vm.rut = '8.820.757-2';
-//     vm.$mount();
-
-//     expect(vm.validRut).toBe(true);
-//   });
-
-//   it('should set directive expression (validRut) to true if model value is a valid rut with k', () => { 
-//     vm.rut = '14.198.117-k';
-//     vm.$mount();
-
-//     expect(vm.validRut).toBe(true);
-//   });
-
-//   it('should set directive expression (validRut) to false if model value is a string', () => { 
-//     vm.rut = 'string';
-//     vm.$mount();
-
-//     expect(vm.validRut).toBe(false);
-//   });
-// });
-
-describe('vue-rut filter test', () => {
+describe('vue-rut: Vue filter test', () => {
 
 	var vm;
 

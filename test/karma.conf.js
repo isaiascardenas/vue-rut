@@ -1,7 +1,6 @@
 // Karma configuration
 // Generated on Thu Dec 29 2016 16:53:00 GMT-0300 (CLST)
 
-// var webpackConfig = require('./webpack.config.js')
 var webpackConfig = require('./../webpack.config.js')
 delete webpackConfig.entry
 delete webpackConfig.ouput
