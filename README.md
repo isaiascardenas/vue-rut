@@ -45,33 +45,5 @@ This will bind the input with `data.rut` and format the input to chilean rut.
 
 ## Validation
 
-To validate the rut add a boolean var into the `data` property.
+To validate the rut this plugin set the vue model to `null`, when the input value is a valid rut the model change to the input value.
 
-```javascript
-// main.js
-
-var vueRut = require('vue-rut');
-Vue.use(vueRut);
-
-const app = new Vue({
-
-    el:'#app',
-    data:{
-        rut: '',
-        validRut: false
-    }
-});
-
-...
-
-```
-And add this var to the directive:
-
-```html
-<div id="app">
-  ...
-  <input v-model="rut" v-rut="validRut">
-  ...
-</div>
-```
-This will change the value of `validRut` to true or false when the rut is valid.
