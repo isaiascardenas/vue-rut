@@ -1,6 +1,6 @@
 {
   "name": "vue-rut",
-  "version": "2.0.0",
+  "version": "2.0.2",
   "description": "Chilean Rut component for Vue",
   "main": "dist/vue-rut.js",
   "scripts": {
@@ -31,7 +31,7 @@
     "karma-webpack": "^1.8.1",
     "mocha": "^2.5.3",
     "phantomjs-prebuilt": "^2.1.7",
-    "vue": "^2.1.6",
+    "vue": "^2.0.1",
     "webpack": "^1.14.0"
   }
 }
