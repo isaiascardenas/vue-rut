@@ -7,7 +7,7 @@ A Vue package to format and validate a chilean rut.
 Run the installation via npm:
 
 ```bash
-npm install vue-rut --save-dev
+npm install vue-rut --save
 ```
 
 And add in your `main.js`  the `require()` function before to create a Vue instance, so in your vue object add a empty var into the data property.
@@ -75,3 +75,12 @@ const app = new Vue({
 </div>
 ```
 This will show: 12.345.678-9
+
+## Test
+ 
+ Run the following command to run the test:
+ 
+ ```bash
+npm run test
+```
+
