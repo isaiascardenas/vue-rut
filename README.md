@@ -9,6 +9,12 @@ Run the installation via npm:
 ```bash
 npm install vue-rut --save
 ```
+Run the installation via yarn:
+
+```bash
+yarn add vue-rut -D
+```
+### CommonJS
 
 And add in your `main.js`  the `require()` function before to create a Vue instance, so in your vue object add a empty var into the data property.
 
@@ -29,6 +35,28 @@ const app = new Vue({
 ...
 
 ```
+### ES6
+
+
+```javascript
+// main.js
+
+import vueRut from 'vue-rut'
+
+Vue.use(vueRut);
+
+const app = new Vue({
+
+    el:'#app',
+    data:{
+        rut: ''
+    }
+});
+
+...
+
+```
+
 ## Basic usage
 
 Link the vue instance whith the html, add the directive `v-rut` and the `v-model` into your input.
